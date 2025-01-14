@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!--
+   Define beans related to this Share extension here, such as
+    evaluators and resource bootstrapping.
+
+    Note. Any configuration related to the whole Share.war webapp
+          (i.e. not specific to this share extension) should be
+           placed in the alfresco-allinone/share/src/main/resources/alfresco/web-extension/custom-slingshot-application-context.xml file
+  -->
+
+  <!-- Share config that always will be applied  -->
+  <bean id="ak.dm.config" class="org.springframework.extensions.config.ConfigBootstrap" init-method="register">
+    <property name="configService" ref="web.config" />
+    <property name="configs">
+      <list>
+        <value>classpath:alfresco/web-extension/site-forms/content/ak-custom-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/common-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/document-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/instruction-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/ordinance-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/listpul-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/generaldocument-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/manual-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/internalvalidation-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/protocol-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/issuelist-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/content/byggreda-form-config.xml</value>
+        <value>classpath:alfresco/web-extension/site-forms/ak-share-dm-workflow-forms-config.xml</value>
+      </list>
+    </property>
+  </bean>
+
+  <!-- Add AK messages -->
+  <bean id="ak.dm.resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+    <property name="resourceBundles">
+      <list>
+
+        <value>alfresco.web-extension.messages.ak-dm</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="se.alingsas.evaluator.doclib.action.DocumentStatusIsComplete" class="se.alingsas.alfresco.share.evaluator.documentlibrary.action.DocumentStatusIsComplete" />
+  <bean id="se.alingsas.evaluator.doclib.action.IsAlingsasDocument" class="se.alingsas.alfresco.share.evaluator.documentlibrary.action.IsAlingsasDocument" />
+  <bean id="se.alingsas.evaluator.doclib.action.IsAdmin" class="se.alingsas.alfresco.share.evaluator.documentlibrary.action.IsAdmin" />
+  <bean id="se.alingsas.evaluator.doclib.action.IsPublicSite" class="se.alingsas.alfresco.share.evaluator.documentlibrary.action.IsPublicSite" />
+
+</beans>

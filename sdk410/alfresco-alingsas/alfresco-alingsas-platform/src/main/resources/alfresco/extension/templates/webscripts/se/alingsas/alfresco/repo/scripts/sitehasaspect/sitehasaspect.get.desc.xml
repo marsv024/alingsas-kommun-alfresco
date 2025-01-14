@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Check if the site has aspect sent as parameter</shortname>
+  <description>Check if the site has aspect sent as parameter</description>
+  <url>/alingsas/user/sitehasaspect</url>
+  <authentication>user</authentication>
+  <format default="json" />
+  <family>Alingsås</family>
+</webscript>

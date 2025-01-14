@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!-- ByggReda -->
+  <bean id="se.alingsas.alfresco.repo.utils.byggreda.ByggRedaUtil" class="se.alingsas.alfresco.repo.utils.byggreda.ByggRedaUtil">
+    <property name="fileFolderService" ref="FileFolderService" />
+    <property name="siteService" ref="SiteService" />
+    <property name="nodeService" ref="NodeService" />
+    <property name="versionService" ref="VersionService" />
+    <property name="contentService" ref="ContentService" />
+    <property name="checkOutCheckInService" ref="CheckOutCheckInService" />
+    <property name="transactionService" ref="TransactionService" />
+    <!-- SourceType can either be filesystem or repository, where repository is within the ByggReda site -->
+    <property name="sourceType" value="${byggreda.sourceType}" />
+    <property name="siteName" value="${byggreda.siteName}" />
+    <property name="destinationPath" value="${byggreda.destinationFolder}" />
+    <property name="logPath" value="${byggreda.logPath}" />
+    <property name="outputPath" value="${byggreda.outputPath}" />
+
+    <property name="globalProperties">
+      <ref bean="global-properties" />
+    </property>
+  </bean>
+
+  <bean id="ak.currentDatePrefixNumberingComponent" parent="rl.abstractNumberingComponent" depends-on="dictionaryBootstrap">
+    <property name="id" value="documentNumber" />
+    <property name="startValue" value="1" />
+    <property name="bindTypes">
+      <list>
+        <value>cm:content</value>
+      </list>
+    </property>
+    <property name="ignoreTypes">
+      <list>
+        <value>cm:thumbnail</value>
+      </list>
+    </property>
+    <property name="ignoreAspects">
+      <list>
+        <value>cm:workingcopy</value>
+      </list>
+    </property>  
+    <property name="decorator" ref="ak.documentNumberDecorator" />
+    <property name="numberingStorage" ref="rl.nodeNumberingStorage" />  
+  </bean>
+  
+  <bean id="ak.documentNumberDecorator" class="se.alingsas.alfresco.repo.numbering.AlingsasDocumentDecorator">
+    <property name="prefixSeparator" value="${ak.numbering.decorator.document.prefixseparator}" />
+    <property name="zeroPadding" value="${ak.numbering.decorator.document.zeropadding}" />
+    <property name="datePattern" value="${ak.numbering.decorator.document.datePattern}" />
+    <property name="numberSeparator" value="${ak.numbering.decorator.document.separator}" />
+  </bean>
+
+
+</beans>

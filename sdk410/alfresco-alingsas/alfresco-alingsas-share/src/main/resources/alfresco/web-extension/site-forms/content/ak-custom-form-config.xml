@@ -1,0 +1,14 @@
+<alfresco-config>
+    <!-- cm:folder type (creating nodes) -->
+   <config evaluator="model-type" condition="cm:folder">
+      <forms>
+         <!-- Document Library Common form -->
+         <form id="doclib-common">
+            <field-visibility>
+               <hide id="cm:title" />
+            </field-visibility>
+         </form>
+      </forms>
+   </config>
+
+</alfresco-config>

@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Membership requests list</shortname>
+  <description>Membership requests list</description>
+  <url>/components/requests/membership-requests</url>
+</webscript>

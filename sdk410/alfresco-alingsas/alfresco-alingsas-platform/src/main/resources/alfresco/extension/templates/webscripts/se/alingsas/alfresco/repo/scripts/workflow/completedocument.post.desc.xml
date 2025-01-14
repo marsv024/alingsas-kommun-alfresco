@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Create a new complete document workflow</shortname>
+  <description>Create a new complete document workflow</description>
+  <url>/alingsas/workflow/completedocument/{workflow}/{node_protocol_id}/{node_store_id}/{node_id}/{secrecy}/{target_site}/{parent_protocol_id}/{parent_store_id}/{parent_node_id}</url>
+  <authentication>user</authentication>
+  <format default="html">argument</format>
+  <family>Alingsås</family>
+</webscript>

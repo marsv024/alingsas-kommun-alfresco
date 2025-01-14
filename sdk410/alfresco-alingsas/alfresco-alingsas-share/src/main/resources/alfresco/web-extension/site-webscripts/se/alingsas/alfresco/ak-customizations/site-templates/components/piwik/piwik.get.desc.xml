@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Adds Piwik Client Tracker to a page</shortname>
+  <url>/components/piwik-footer</url>
+  <family>VGR</family>
+</webscript>

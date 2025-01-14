@@ -1,0 +1,66 @@
+<alfresco-config>
+
+  <config evaluator="model-type" condition="akdm:byggredadocument">
+    <forms>
+      <!-- Search form -->
+      <form id="search">
+        <field-visibility>
+          <show id="cm:name" />
+          <show id="cm:title" />
+          <show id="cm:description" />
+          <show id="cm:creator" />
+          <hide id="cm:created" />
+          <show id="cm:modifier" />
+          <hide id="cm:modified" />
+          <show id="akdm:documentNumber" />
+          <show id="akdm:documentStatus" />
+          <show id="akdm:documentSecrecy" />
+          <!-- ByggReda -->
+          <show id="akdm:byggRedaFilm" />
+          <show id="akdm:byggRedaSerialNumber" />
+          <show id="akdm:byggRedaRecordDisplay" />
+          <show id="akdm:byggRedaBuildingDescription" />
+          <show id="akdm:byggRedaLastBuildingDescription" />
+          <show id="akdm:byggRedaAddress" />
+          <show id="akdm:byggRedaLastAddress" />
+          <show id="akdm:byggRedaDecision" />
+          <show id="akdm:byggRedaFor" />
+          <show id="akdm:byggRedaIssuePurpose" />
+          <show id="akdm:byggRedaNote" />
+          <show id="akdm:byggRedaRecords" />
+        </field-visibility>
+        <appearance>
+          <set id="documentdescription" appearance="bordered-panel" label-id="set.akdm.documentdescription" />
+          <field id="cm:name" set="documentdescription" />
+          <field id="cm:title" set="documentdescription">
+            <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+          </field>
+          <field id="cm:description" set="documentdescription" />
+          <field id="cm:creator" set="documentdescription" />
+          <field id="cm:created" set="documentdescription" />
+          <field id="cm:modifier" set="documentdescription" />
+          <field id="cm:modified" set="documentdescription" />
+          <field id="cm:versionLabel" set="documentdescription" />
+          <field id="akdm:documentNumber" set="documentdescription" />
+          <field id="akdm:documentStatus" set="documentdescription" />
+          <field id="akdm:documentSecrecy" set="documentdescription" />
+          
+          <set id="byggRedaDocument" appearance="bordered-panel" label-id="set.akdm.byggRedaDocument" />
+          <field id="akdm:byggRedaFilm" set="byggRedaDocument" />
+          <field id="akdm:byggRedaSerialNumber" set="byggRedaDocument" />
+          <field id="akdm:byggRedaRecordDisplay" set="byggRedaDocument" />
+          <field id="akdm:byggRedaBuildingDescription" set="byggRedaDocument" />
+          <field id="akdm:byggRedaLastBuildingDescription" set="byggRedaDocument" />
+          <field id="akdm:byggRedaAddress" set="byggRedaDocument" />
+          <field id="akdm:byggRedaLastAddress" set="byggRedaDocument" />
+          <field id="akdm:byggRedaDecision" set="byggRedaDocument" />
+          <field id="akdm:byggRedaFor" set="byggRedaDocument" />
+          <field id="akdm:byggRedaIssuePurpose" set="byggRedaDocument" />
+          <field id="akdm:byggRedaNote" set="byggRedaDocument" />
+          <field id="akdm:byggRedaRecords" set="byggRedaDocument" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+</alfresco-config>

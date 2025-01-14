@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.alingsas.se/alfresc/workflow">
+  <process id="completeDocument" name="Färdigställande av dokument" isExecutable="true">
+    <extensionElements>
+      <activiti:executionListener event="start" class="se.alingsas.alfresco.repo.workflow.CompleteDocumentExecutionStartListener"></activiti:executionListener>
+    </extensionElements>
+    <startEvent id="start" name="Start" activiti:formKey="akwf:completeDocument"></startEvent>
+    <sequenceFlow id="start_flow" name="Hantera dokument olika beroende på val av målmapp i formulär" sourceRef="start" targetRef="autoManDecision"></sequenceFlow>
+    <exclusiveGateway id="autoManDecision" name="Decides if automatic or manual handling should be done for this process"></exclusiveGateway>
+    <sequenceFlow id="manual_publishing_flow" name="Användare har inte rättighet att skapa fil i målmappen =  Manuell hantering" sourceRef="autoManDecision" targetRef="reviewDocumentTask">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_handling== 'Manual'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="reviewDocumentTask" name="Dokumentansvarig på site skall godkänna färdigställande av dokument" activiti:candidateGroups="${akwf_siteGroup}" activiti:formKey="akwf:completeDocumentReviewDocumentTask">
+      <extensionElements>
+        <activiti:taskListener event="complete" class="se.alingsas.alfresco.repo.workflow.CompleteDocumentReviewTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="review_decision_flow" sourceRef="reviewDocumentTask" targetRef="reviewDecision"></sequenceFlow>
+    <exclusiveGateway id="reviewDecision" name="Review Decision"></exclusiveGateway>
+    <sequenceFlow id="approve_publishing_flow" name="Godkänn färdigställande" sourceRef="reviewDecision" targetRef="completeDocumentScript">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_reviewOutcome== 'Approve'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="auto_publishing_flow" name="Användare har rättighet att skapa fil i målmappen = Automatisk hantering" sourceRef="autoManDecision" targetRef="completeDocumentScript">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_handling== 'Automatic'}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="completeDocumentScript" name="Färdigställ dokument" activiti:class="se.alingsas.alfresco.repo.workflow.CompleteDocumentServiceTaskDelegate"></serviceTask>
+    <sequenceFlow id="deny_publishing_flow" name="Neka färdigställande" sourceRef="reviewDecision" targetRef="userReviewResultReceiptTask">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_reviewOutcome== 'Reject'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="user_receipt_review_flow" sourceRef="completeDocumentScript" targetRef="userReviewResultReceiptTask"></sequenceFlow>
+    <sequenceFlow id="error_flow" name="Felhantering" sourceRef="autoManDecision" targetRef="userReviewResultReceiptTask">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_handling== 'Error'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="userReviewResultReceiptTask" name="Kvittens på godkänd / nekad publicering" activiti:assignee="${akwf_initiator}" activiti:formKey="akwf:completeDocumentUserReviewResultReceiptTask">
+      <extensionElements>
+        <activiti:taskListener event="create" class="se.alingsas.alfresco.repo.workflow.UnlockFilesTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="end_flow" sourceRef="userReviewResultReceiptTask" targetRef="end"></sequenceFlow>
+    <endEvent id="end" name="End"></endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_completeDocument">
+    <bpmndi:BPMNPlane bpmnElement="completeDocument" id="BPMNPlane_completeDocument">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reviewDocumentTask" id="BPMNShape_reviewDocumentTask">
+        <omgdc:Bounds height="108.0" width="105.0" x="148.0" y="27.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="830.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="autoManDecision" id="BPMNShape_autoManDecision">
+        <omgdc:Bounds height="40.0" width="40.0" x="180.0" y="197.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reviewDecision" id="BPMNShape_reviewDecision">
+        <omgdc:Bounds height="40.0" width="40.0" x="412.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="completeDocumentScript" id="BPMNShape_completeDocumentScript">
+        <omgdc:Bounds height="55.0" width="105.0" x="380.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userReviewResultReceiptTask" id="BPMNShape_userReviewResultReceiptTask">
+        <omgdc:Bounds height="55.0" width="105.0" x="610.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="manual_publishing_flow" id="BPMNEdge_manual_publishing_flow">
+        <omgdi:waypoint x="200.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="135.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="65.0" width="100.0" x="20.0" y="-34.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="review_decision_flow" id="BPMNEdge_review_decision_flow">
+        <omgdi:waypoint x="253.0" y="81.0"></omgdi:waypoint>
+        <omgdi:waypoint x="412.0" y="80.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="deny_publishing_flow" id="BPMNEdge_deny_publishing_flow">
+        <omgdi:waypoint x="452.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="662.0" y="79.0"></omgdi:waypoint>
+        <omgdi:waypoint x="662.0" y="190.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="39.0" width="100.0" x="-72.0" y="-38.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approve_publishing_flow" id="BPMNEdge_approve_publishing_flow">
+        <omgdi:waypoint x="432.0" y="100.0"></omgdi:waypoint>
+        <omgdi:waypoint x="432.0" y="190.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="39.0" width="100.0" x="8.0" y="-25.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="auto_publishing_flow" id="BPMNEdge_auto_publishing_flow">
+        <omgdi:waypoint x="220.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="217.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="65.0" width="100.0" x="-70.0" y="0.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="error_flow" id="BPMNEdge_error_flow">
+        <omgdi:waypoint x="200.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="199.0" y="332.0"></omgdi:waypoint>
+        <omgdi:waypoint x="406.0" y="332.0"></omgdi:waypoint>
+        <omgdi:waypoint x="662.0" y="332.0"></omgdi:waypoint>
+        <omgdi:waypoint x="662.0" y="245.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="-38.0" y="18.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="end_flow" id="BPMNEdge_end_flow">
+        <omgdi:waypoint x="715.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="830.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="start_flow" id="BPMNEdge_start_flow">
+        <omgdi:waypoint x="65.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="180.0" y="217.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="65.0" width="100.0" x="-41.0" y="3.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="user_receipt_review_flow" id="BPMNEdge_user_receipt_review_flow">
+        <omgdi:waypoint x="485.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

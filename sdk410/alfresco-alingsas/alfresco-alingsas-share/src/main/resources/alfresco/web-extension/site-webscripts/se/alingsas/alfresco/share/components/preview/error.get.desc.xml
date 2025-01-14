@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Preview Error</shortname>
+  <description>Preview error component</description>
+  <url>/ak/components/preview/error</url>
+</webscript>

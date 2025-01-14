@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<presets>
+	<preset id="ak-dm-public">
+		<components>
+			<!-- title -->
+			<component>
+				<scope>page</scope>
+				<region-id>title</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/title/collaboration-title</url>
+			</component>
+			<!-- navigation -->
+			<component>
+				<scope>page</scope>
+				<region-id>navigation</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/navigation/collaboration-navigation</url>
+			</component>
+			<!-- dashboard components -->
+			<component>
+				<scope>page</scope>
+				<region-id>full-width-dashlet</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/dynamic-welcome</url>
+				<properties>
+					<dashboardType>site</dashboardType>
+				</properties>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-1-1</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/colleagues</url>
+				<properties>
+					<height>504</height>
+				</properties>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-2-1</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/docsummary</url>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-2-2</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/activityfeed</url>
+			</component>
+		</components>
+
+		<pages>
+			<page id="site/${siteid}/dashboard">
+				<title>Collaboration site for public documents</title>
+				<title-id>page.akdm.siteDashboard.public.title</title-id>
+				<description>Collaboration site's dashboard page</description>
+				<description-id>page.akdm.siteDashboard.public.description</description-id>
+				<template-instance>dashboard-2-columns-wide-right</template-instance>
+				<authentication>user</authentication>
+				<properties>
+					<sitePages>[{"pageId":"documentlibrary"}]</sitePages>
+					<theme>ak-greenTheme</theme>
+				</properties>
+			</page>
+		</pages>
+	</preset>
+	
+	<preset id="ak-dm-secrecy">
+		<components>
+			<!-- title -->
+			<component>
+				<scope>page</scope>
+				<region-id>title</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/title/collaboration-title</url>
+			</component>
+			<!-- navigation -->
+			<component>
+				<scope>page</scope>
+				<region-id>navigation</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/navigation/collaboration-navigation</url>
+			</component>
+			<!-- dashboard components -->
+			<component>
+				<scope>page</scope>
+				<region-id>full-width-dashlet</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/dynamic-welcome</url>
+				<properties>
+					<dashboardType>site</dashboardType>
+				</properties>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-1-1</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/colleagues</url>
+				<properties>
+					<height>504</height>
+				</properties>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-2-1</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/docsummary</url>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-2-2</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/activityfeed</url>
+			</component>
+		</components>
+		<pages>
+			<page id="site/${siteid}/dashboard">
+				<title>Collaboration site for public documents</title>
+				<title-id>page.akdm.siteDashboard.secrecy.title</title-id>
+				<description>Collaboration site's dashboard page</description>
+				<description-id>page.akdm.siteDashboard.secrecy.description</description-id>
+				<template-instance>dashboard-2-columns-wide-right</template-instance>
+				<authentication>user</authentication>
+				<properties>
+					<sitePages>[{"pageId":"documentlibrary"}]</sitePages>
+					<theme>ak-redTheme</theme>
+				</properties>
+			</page>
+		</pages>
+	</preset>
+	
+	<preset id="ak-dm-template">
+		<components>
+			<!-- title -->
+			<component>
+				<scope>page</scope>
+				<region-id>title</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/title/collaboration-title</url>
+			</component>
+			<!-- navigation -->
+			<component>
+				<scope>page</scope>
+				<region-id>navigation</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/navigation/collaboration-navigation</url>
+			</component>
+			<!-- dashboard components -->
+			<component>
+				<scope>page</scope>
+				<region-id>full-width-dashlet</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/dynamic-welcome</url>
+				<properties>
+					<dashboardType>site</dashboardType>
+				</properties>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-1-1</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/colleagues</url>
+				<properties>
+					<height>504</height>
+				</properties>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-2-1</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/docsummary</url>
+			</component>
+			<component>
+				<scope>page</scope>
+				<region-id>component-2-2</region-id>
+				<source-id>site/${siteid}/dashboard</source-id>
+				<url>/components/dashlets/activityfeed</url>
+			</component>
+		</components>
+		<pages>
+			<page id="site/${siteid}/dashboard">
+				<title>Collaboration site for templates</title>
+				<title-id>page.akdm.siteDashboard.template.title</title-id>
+				<description>Collaboration site's dashboard page</description>
+				<description-id>page.akdm.siteDashboard.template.description</description-id>
+				<template-instance>dashboard-2-columns-wide-right</template-instance>
+				<authentication>user</authentication>
+				<properties>
+					<sitePages>[{"pageId":"documentlibrary"}]</sitePages>
+					<theme>ak-yellowTheme</theme>
+				</properties>
+			</page>
+		</pages>
+	</preset>
+	
+</presets>

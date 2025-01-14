@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!-- Abstract policy bean which contain common bean references -->
+  <bean id="ak.abstractPolicy" class="se.alingsas.alfresco.repo.behaviour.AbstractPolicy" abstract="true">
+    <property name="repository" ref="repositoryHelper" />
+    <property name="nodeService" ref="NodeService" />
+    <property name="permissionService" ref="PermissionService" />
+    <property name="policyComponent" ref="policyComponent" />
+    <property name="behaviourFilter" ref="policyBehaviourFilter" />
+    <property name="lockService" ref="LockService" />
+    <property name="fileFolderService" ref="FileFolderService" />
+    <property name="siteService" ref="SiteService" />
+    <property name="dictionaryService" ref="DictionaryService" />
+  </bean>
+
+  <bean id="ak.documentPolicy" class="se.alingsas.alfresco.repo.behaviour.DocumentPolicy" depends-on="ak.dictionaryBootstrap" parent="ak.abstractPolicy">
+    <property name="numberingComponent" ref="ak.currentDatePrefixNumberingComponent" />
+  </bean>
+
+  <bean id="ak.governingAspectPolicy" class="se.alingsas.alfresco.repo.behaviour.GoverningAspectPolicy" depends-on="ak.dictionaryBootstrap" parent="ak.abstractPolicy" />
+
+</beans>

@@ -1,0 +1,1 @@
+function main(){var b=page.url.args.nodeRef;context.attributes.nodeRef=b;if(b==null){b=""}var a=remote.connect("alfresco").get("/api/node/"+b.replace(/:\//g,"")+"/metadata");model.outcome=a.status==200?"":"error"}main();

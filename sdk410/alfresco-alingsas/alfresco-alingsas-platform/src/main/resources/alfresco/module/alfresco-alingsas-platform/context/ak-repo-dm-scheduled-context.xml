@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <bean id="ak.closeRunningWorkflowReceiptsJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="se.alingsas.alfresco.repo.jobs.CloseRunningWorkflowReceipts"/>
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="workflowService">
+          <ref bean="WorkflowService"/>
+        </entry>
+        <entry key="repositoryState">
+          <ref bean="repositoryState"/>
+        </entry>
+        <entry key="transactionService">
+          <ref bean="transactionService"/>
+        </entry>
+        <entry key="jobLockService">
+          <ref bean="jobLockService"/>
+        </entry>
+      </map>
+    </property>
+  </bean>
+  <bean id="ak.closeRunningWorkflowReceiptsJobAccessor" class="org.alfresco.schedule.AlfrescoSchedulerAccessorBean">
+    <property name="scheduler" ref="schedulerFactory"/>
+    <property name="enabled" value="${ak.closeRunningWorkflowReceipts.enabled}"/>
+    <property name="triggers">
+      <list>
+        <bean id="ak.closeRunningWorkflowReceiptsJobTrigger"
+              class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+          <property name="cronExpression" value="${ak.closeRunningWorkflowReceipts.schedule}"/>
+          <property name="jobDetail" ref="ak.closeRunningWorkflowReceiptsJobDetail"/>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+</beans>
+  

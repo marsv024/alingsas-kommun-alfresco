@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>alfresco-alingsas-platform</artifactId>
+    <name>Alfresco Platform/Repository JAR Module</name>
+    <description>Platform/Repo JAR Module (to be included in the alfresco.war) - part of AIO - SDK 4.10</description>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>se.alingsas.alfresco</groupId>
+        <artifactId>alfresco-alingsas</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+      <dependency>
+        <groupId>commons-lang</groupId>
+        <artifactId>commons-lang</artifactId>
+      </dependency>
+
+      <!-- https://github.com/alfresco/share/tree/develop/share-services -->
+      <dependency>
+        <groupId>org.alfresco</groupId>
+        <artifactId>alfresco-share-services</artifactId>
+        <version>${alfresco.share.version}</version>
+        <scope>provided</scope>
+        <classifier>classes</classifier>
+      </dependency>
+
+      <!-- https://github.com/alfresco/share/tree/develop/share-services -->
+      <dependency>
+        <groupId>org.alfresco</groupId>
+        <artifactId>alfresco-share-services</artifactId>
+        <version>${alfresco.share.version}</version>
+        <scope>provided</scope>
+        <classifier>classes</classifier>
+      </dependency>
+
+      <!-- https://github.com/redpill-linpro/alfresco-numbering -->
+      <dependency>
+        <groupId>org.redpill-linpro.alfresco.numbering</groupId>
+        <artifactId>alfresco-numbering-repo</artifactId>
+        <version>${rl.alfresco.numbering.version}</version>
+      </dependency>
+
+      <!--https://github.com/Redpill-Linpro/alfresco-jobs-->
+      <dependency>
+        <groupId>org.redpill-linpro.alfresco.module</groupId>
+        <artifactId>alfresco-jobs</artifactId>
+        <version>${rl.alfresco.jobs}</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/org.jmock/jmock-junit4 -->
+      <dependency>
+        <groupId>org.jmock</groupId>
+        <artifactId>jmock-junit4</artifactId>
+        <version>2.6.0</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>junit-dep</artifactId>
+            <groupId>junit</groupId>
+          </exclusion>
+        </exclusions>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jmock</groupId>
+        <artifactId>jmock-legacy</artifactId>
+        <version>2.6.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>jakarta.transaction</groupId>
+        <artifactId>jakarta.transaction-api</artifactId>
+      </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

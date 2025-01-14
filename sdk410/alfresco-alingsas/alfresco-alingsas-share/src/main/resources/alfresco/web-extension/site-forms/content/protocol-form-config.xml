@@ -1,0 +1,77 @@
+<alfresco-config>
+
+  <config evaluator="model-type" condition="akdm:protocol">
+    <forms>
+      <!-- Search form -->
+      <form id="search">
+        <field-visibility>
+          <show id="cm:name" />
+          <show id="cm:title" />
+          <show id="cm:description" />
+          <show id="cm:creator" />
+          <hide id="cm:created" />
+          <show id="cm:modifier" />
+          <hide id="cm:modified" />
+          <show id="akdm:documentNumber" />
+          <show id="akdm:documentStatus" />
+          <show id="akdm:documentSecrecy" />
+          <show id="akdm:protocolId" />
+        </field-visibility>
+        <appearance>
+          <set id="documentdescription" appearance="bordered-panel" label-id="set.akdm.documentdescription" />
+          <field id="cm:name" set="documentdescription" />
+          <field id="cm:title" set="documentdescription">
+            <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+          </field>
+          <field id="cm:description" set="documentdescription" />
+          <field id="cm:creator" set="documentdescription" />
+          <field id="cm:created" set="documentdescription" />
+          <field id="cm:modifier" set="documentdescription" />
+          <field id="cm:modified" set="documentdescription" />
+          <field id="cm:versionLabel" set="documentdescription" />
+          <field id="akdm:documentNumber" set="documentdescription" />
+          <field id="akdm:documentStatus" set="documentdescription" />
+          <field id="akdm:documentSecrecy" set="documentdescription" />
+          
+          <set id="protocol" appearance="bordered-panel" label-id="set.akdm.protocol" />
+          <field id="akdm:protocolId" set="protocol" />
+        </appearance>
+      </form>
+
+      <!-- Create form -->
+      <form>
+        <field-visibility>
+          <!-- Dokumentbeskrivning -->
+          <show id="cm:name" />
+          <show id="cm:title" />
+          <show id="cm:description" />
+          <show id="akdm:documentSecrecy" />
+
+          <show id="akdm:protocolId" />
+
+          <show id="rplpdt:template" force="true" />
+        </field-visibility>
+        <appearance>
+          <set id="documentdescription" appearance="bordered-panel" label-id="set.akdm.documentdescription" />
+          <field id="cm:name" set="documentdescription" />
+          <field id="cm:title" set="documentdescription">
+            <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+          </field>
+          <field id="cm:description" set="documentdescription" />
+          <field id="akdm:documentSecrecy" set="documentdescription" />
+          <!-- This field is used to control document templates for this type. A temporary aspect attached to the node when created and cleared by a formfilter afterwards -->
+          <field id="rplpdt:template" label-id="property.akdm_basedOnTemplate" set="documentdescription" mandatory="true">
+            <control template="/org/alfresco/components/form/controls/association.ftl">
+              <control-param name="startLocation">/app:company_home/st:sites/cm:templates/cm:documentLibrary/cm:Dokument</control-param>
+              <control-param name="rootNode">/app:company_home/st:sites/cm:templates/cm:documentLibrary/cm:Dokument</control-param>
+            </control>
+          </field>
+
+          <set id="protocol" appearance="bordered-panel" label-id="set.akdm.protocol" />
+          <field id="akdm:protocolId" set="protocol" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+</alfresco-config>

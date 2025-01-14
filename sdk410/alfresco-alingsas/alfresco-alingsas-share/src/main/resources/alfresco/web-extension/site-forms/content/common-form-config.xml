@@ -1,0 +1,191 @@
+<alfresco-config>
+
+  <config evaluator="aspect" condition="akdm:commonAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="cm:name" />
+          <show id="cm:title" />
+          <show id="cm:description" />
+          <show id="cm:creator" for-mode="view" />
+          <show id="cm:created" for-mode="view" />
+          <show id="cm:modifier" for-mode="view" />
+          <show id="cm:modified" for-mode="view" />
+          <show id="cm:versionLabel" for-mode="view" />
+
+          <show id="akdm:documentNumber" for-mode="view" />
+          <show id="akdm:documentStatus" for-mode="view" />
+          <show id="akdm:documentSecrecy" />
+          <show id="akdm:department" />
+          <show id="cm:taggable" force="true"/>
+          <show id="cm:categories" force="true" />
+        </field-visibility>
+        <appearance>
+          <set id="documentdescription" appearance="bordered-panel" label-id="set.akdm.documentdescription" />
+          <field id="cm:name" set="documentdescription" />
+          <field id="cm:title" set="documentdescription">
+            <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+          </field>
+          <field id="cm:description" set="documentdescription" />
+          <field id="cm:creator" set="documentdescription" />
+          <field id="cm:created" set="documentdescription" />
+          <field id="cm:modifier" set="documentdescription" />
+          <field id="cm:modified" set="documentdescription" />
+          <field id="cm:versionLabel" set="documentdescription" />
+
+          <field id="akdm:documentNumber" set="documentdescription" />
+          <field id="akdm:documentStatus" set="documentdescription" />
+          <field id="akdm:documentSecrecy" set="documentdescription" />
+          <field id="akdm:department" set="documentdescription" />
+          <field id="cm:taggable" set="documentdescription">
+            <control>
+              <control-param name="compactMode">true</control-param>
+              <control-param name="params">aspect=cm:taggable</control-param>
+              <control-param name="createNewItemUri">/api/tag/workspace/SpacesStore</control-param>
+              <control-param name="createNewItemIcon">tag</control-param>
+            </control>
+          </field>
+          <field id="cm:categories" set="documentdescription" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <config evaluator="aspect" condition="akdm:governingAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="akdm:governingDecisionDate" />
+          <show id="akdm:governingInstance" />
+          <show id="akdm:governingGroup" />
+          <show id="akdm:governingTargetGroup" />
+          <show id="akdm:governingDocResponsible" />
+        </field-visibility>
+        <appearance>
+          <set id="governing" appearance="bordered-panel" label-id="set.akdm.governing" />
+          <field id="akdm:governingDecisionDate" set="governing" />
+          <field id="akdm:governingInstance" set="governing" />
+          <field id="akdm:governingGroup" set="governing" />
+          <field id="akdm:governingTargetGroup" set="governing" />
+          <field id="akdm:governingDocResponsible" set="governing" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <config evaluator="aspect" condition="akdm:protocolAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="akdm:protocolId" />
+        </field-visibility>
+        <appearance>
+          <set id="protocol" appearance="bordered-panel" label-id="set.akdm.protocol" />
+          <field id="akdm:protocolId" set="protocol" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <config evaluator="aspect" condition="akdm:instructionAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="akdm:instructionDecisionDate" />
+          <show id="akdm:instructionGroup" />
+        </field-visibility>
+        <appearance>
+          <set id="instruction" appearance="bordered-panel" label-id="set.akdm.instruction" />
+          <field id="akdm:instructionDecisionDate" set="instruction" />
+          <field id="akdm:instructionGroup" set="instruction" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <config evaluator="aspect" condition="akdm:generalDocumentAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="akdm:generalDocumentDescription" />
+          <show id="akdm:generalDocumentDate" />
+        </field-visibility>
+        <appearance>
+          <set id="generalDocument" appearance="bordered-panel" label-id="set.akdm.generalDocument" />
+          <field id="akdm:generalDocumentDescription" set="generalDocument" />
+          <field id="akdm:generalDocumentDate" set="generalDocument" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <config evaluator="aspect" condition="akdm:manualAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="akdm:manualFunction" />
+          <show id="akdm:manualManual" />
+        </field-visibility>
+        <appearance>
+          <set id="manual" appearance="bordered-panel" label-id="set.akdm.manual" />
+          <field id="akdm:manualFunction" set="manual" />
+          <field id="akdm:manualManual" set="manual" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+  <config evaluator="aspect" condition="akdm:issueListAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <show id="akdm:issuelistMeetingDate" />
+        </field-visibility>
+        <appearance>
+          <set id="issuelist" appearance="bordered-panel" label-id="set.akdm.issuelist" />
+          <field id="akdm:issuelistMeetingDate" set="issuelist" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+
+  <config evaluator="aspect" condition="akdm:byggRedaAspect">
+    <forms>
+      <form>
+        <field-visibility>
+          <!-- ByggReda -->
+          <show id="akdm:byggRedaFilm" />
+          <show id="akdm:byggRedaSerialNumber" />
+          <show id="akdm:byggRedaRecordDisplay" />
+          <show id="akdm:byggRedaBuildingDescription" />
+          <show id="akdm:byggRedaLastBuildingDescription" />
+          <show id="akdm:byggRedaAddress" />
+          <show id="akdm:byggRedaLastAddress" />
+          <show id="akdm:byggRedaDecision" />
+          <show id="akdm:byggRedaFor" />
+          <show id="akdm:byggRedaIssuePurpose" />
+          <show id="akdm:byggRedaNote" />
+          <show id="akdm:byggRedaRecords" />
+        </field-visibility>
+        <appearance>
+          <set id="byggRedaDocument" appearance="bordered-panel" label-id="set.akdm.byggRedaDocument" />
+          <field id="akdm:byggRedaFilm" set="byggRedaDocument" />
+          <field id="akdm:byggRedaSerialNumber" set="byggRedaDocument" />
+          <field id="akdm:byggRedaRecordDisplay" set="byggRedaDocument" />
+          <field id="akdm:byggRedaBuildingDescription" set="byggRedaDocument" />
+          <field id="akdm:byggRedaLastBuildingDescription" set="byggRedaDocument" />
+          <field id="akdm:byggRedaAddress" set="byggRedaDocument" />
+          <field id="akdm:byggRedaLastAddress" set="byggRedaDocument" />
+          <field id="akdm:byggRedaDecision" set="byggRedaDocument" />
+          <field id="akdm:byggRedaFor" set="byggRedaDocument" />
+          <field id="akdm:byggRedaIssuePurpose" set="byggRedaDocument" />
+          <field id="akdm:byggRedaNote" set="byggRedaDocument" />
+          <field id="akdm:byggRedaRecords" set="byggRedaDocument" />
+        </appearance>
+      </form>
+    </forms>
+  </config>
+
+
+</alfresco-config>

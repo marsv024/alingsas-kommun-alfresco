@@ -1,0 +1,5 @@
+<webscript>
+  <shortname>Preview Header</shortname>
+  <description>Preview header component</description>
+  <url>/ak/components/preview/node-header</url>
+</webscript>

@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Handle missing document numbers</shortname>
+  <description>Handle missing document numbers</description>
+  <url>/alingsas/documentnumbering/handlemissing</url>
+  <authentication>admin</authentication>
+  <format default="html">argument</format>
+  <family>Alingsås</family>
+</webscript>

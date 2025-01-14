@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+  <!-- Bean configurations for ByggRedaImpor script -->
+  <bean id="webscript.se.alingsas.alfresco.repo.scripts.byggreda.import.post" class="se.alingsas.alfresco.repo.scripts.ByggRedaImport" parent="webscript">
+    <property name="serviceRegistry" ref="ServiceRegistry" />
+    <property name="siteName" value="${byggreda.siteName}" />
+    <property name="basePath" value="${byggreda.basePath}" />
+  </bean>
+
+  <!-- Bean configurations for Document numbering script -->
+  <bean id="webscript.se.alingsas.alfresco.repo.scripts.documentnumbering.handlemissing.get" class="se.alingsas.alfresco.repo.scripts.HandleMissingDocumentNumbers" parent="webscript">
+    <property name="serviceRegistry" ref="ServiceRegistry" />
+    <property name="behaviourFilter" ref="policyBehaviourFilter" />
+    <property name="numberingComponent" ref="ak.currentDatePrefixNumberingComponent" />
+    <property name="repositoryHelper" ref="repositoryHelper" />
+  </bean>
+
+  <!-- Bean configuration for Complete document workflow web script -->
+
+  <bean id="webscript.se.alingsas.alfresco.repo.scripts.workflow.completedocument.post" class="se.alingsas.alfresco.repo.scripts.CompleteDocumentStartWf" parent="webscript">
+    <property name="nodeService" ref="NodeService" />
+    <property name="siteService" ref="SiteService" />
+    <property name="workflowService" ref="WorkflowService" />
+  </bean>
+  
+  <bean id="webscript.se.alingsas.alfresco.repo.scripts.sitehasaspect.sitehasaspect.get" class="se.alingsas.alfresco.repo.webscripts.SiteHasAspect" parent="webscript">
+    <property name="nodeService" ref="NodeService" />
+    <property name="siteService" ref="SiteService" />
+  </bean>
+
+  <bean id="webscript.se.alingsas.alfresco.repo.scripts.script.email.service" class="se.alingsas.alfresco.repo.service.ScriptEmailService" parent="baseJavaScriptExtension">
+    <property name="extensionName" value="emailService" />
+    <property name="nodeService" ref="NodeService" />
+    <property name="personService" ref="PersonService" />
+  </bean>
+  
+</beans>

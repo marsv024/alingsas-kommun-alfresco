@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Definition of the metadata writeable aspect -->
+<model name="fwi:findwiseIntegrationModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+  <!-- Optional meta-data about the model -->
+  <description>Metadata writeable aspect</description>
+  <author>Marcus Svensson, Redpill Linpro AB</author>
+  <version>1.0</version>
+
+  <!-- Imports are required to allow references to definitions in other models -->
+  <imports>
+    <!-- Import Alfresco Dictionary Definitions -->
+    <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+  </imports>
+
+  <!-- Introduction of new namespaces defined by this model -->
+  <namespaces>
+    <namespace uri="http://www.redpill-linpro.com/model/findwise-integration-model/1.0" prefix="fwi" />
+  </namespaces>
+
+  <aspects>
+    <aspect name="fwi:findwiseIndexable">
+      <title>Findwise Indexable</title>
+      <properties>
+        <property name="fwi:lastPushToIndex">
+          <title>Date for last successful push</title>
+          <type>d:date</type>
+          <mandatory>false</mandatory>
+        </property>
+        <property name="fwi:lastPushFailed">
+          <title>Last Push Failed?</title>
+          <type>d:boolean</type>
+          <mandatory>false</mandatory>
+          <default>false</default>
+        </property>
+        <property name="fwi:inIndex">
+          <title>Last Push Failed?</title>
+          <type>d:boolean</type>
+          <mandatory>false</mandatory>
+          <default>false</default>
+        </property>        
+      </properties>
+    </aspect>
+  </aspects>
+
+</model>

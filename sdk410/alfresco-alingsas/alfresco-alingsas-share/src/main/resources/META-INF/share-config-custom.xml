@@ -1,0 +1,217 @@
+<alfresco-config>
+  <!-- Global config section -->
+  <config replace="true">
+    <header>
+
+      <!-- The number of sites to display in the recent history group of the sites menu -->
+      <max-recent-sites>5</max-recent-sites>
+
+      <!-- The number of sites page links (e.g. "Dashboard", "Document Library", "Calendar", etc that will be displayed on any site page for navigation. All other site pages will be displayed under a "More" drop down menu. The current site page will always be displayed -->
+      <max-displayed-site-pages>10</max-displayed-site-pages>
+
+    </header>
+  </config>
+  <!-- Document Library config section -->
+  <config evaluator="string-compare" condition="DocumentLibrary" replace="true">
+
+    <!-- Used by the "Change Type" action Define valid subtypes using the following example: <type name="cm:content"> <subtype name="cm:mysubtype" /> </type> Remember to also add the relevant i18n string(s): type.cm_mysubtype=My SubType -->
+    <types>
+      <type name="cm:content">
+        <subtype name="akdm:document"/>
+      </type>
+    </types>
+
+    <create-content>
+      <content id="folder" label="create-content.folder" icon="folder" index="5" type="javascript">
+        <param name="function">onNewFolder</param>
+      </content>
+      <content id="document" label="type.akdm_document" type="pagelink" index="15" icon="text">
+        <param name="page">create-content?destination={nodeRef}&amp;itemId=akdm:document
+        </param>
+      </content>
+    </create-content>
+
+    <create-content-by-template>false</create-content-by-template>
+  </config>
+
+
+  <config replace="true" evaluator="string-compare" condition="AdvancedSearch">
+    <advanced-search>
+      <!-- Forms for the advanced search type list -->
+      <forms>
+        <form labelId="search.form.akdm_document.title" descriptionId="search.form.akdm_document.desc">
+          akdm:document
+        </form>
+        <form labelId="search.form.label.cm_folder" descriptionId="search.form.desc.cm_folder">cm:folder</form>
+        <form labelId="search.form.akdm_instruction.title" descriptionId="search.form.akdm_instruction.desc">
+          akdm:instruction
+        </form>
+        <form labelId="search.form.akdm_byggreda.title" descriptionId="search.form.akdm_byggreda.desc">
+          akdm:byggredadocument
+        </form>
+        <form labelId="search.form.akdm_ordinance.title" descriptionId="search.form.akdm_ordinance.desc">
+          akdm:ordinance
+        </form>
+        <form labelId="search.form.akdm_listpul.title" descriptionId="search.form.akdm_listpul.desc">
+          akdm:listpul
+        </form>
+        <form labelId="search.form.akdm_generaldocument.title"
+              descriptionId="search.form.akdm_generaldocument.desc">akdm:generaldocument
+        </form>
+        <form labelId="search.form.akdm_manual.title" descriptionId="search.form.akdm_manual.desc">akdm:manual
+        </form>
+        <form labelId="search.form.akdm_internalvalidation.title"
+              descriptionId="search.form.akdm_internalvalidation.desc">akdm:internalvalidation
+        </form>
+        <form labelId="search.form.akdm_protocol.title" descriptionId="search.form.akdm_protocol.desc">
+          akdm:protocol
+        </form>
+        <form labelId="search.form.akdm_issuelist.title" descriptionId="search.form.akdm_issuelist.desc">
+          akdm:issuelist
+        </form>
+      </forms>
+    </advanced-search>
+  </config>
+
+  <config evaluator="string-compare" condition="Workflow">
+    <hidden-workflows>
+      <workflow name="activiti$activitiAdhoc"/>
+      <workflow name="activiti$activitiReview"/>
+      <workflow name="activiti$activitiReviewPooled"/>
+      <workflow name="activiti$activitiParallelReview"/>
+      <workflow name="activiti$activitiParallelGroupReview"/>
+    </hidden-workflows>
+  </config>
+
+  <config evaluator="string-compare" condition="DocLibCustom">
+    <dependencies>
+      <js src="ak/components/workflow/complete-document-actions.js"/>
+      <js src="ak/components/emailaction/email-action-mailto-members.js"/>
+      <css src="ak/components/emailaction/email-action-mailto-members.css"/>
+    </dependencies>
+  </config>
+
+  <!-- Document Library Actions config section -->
+  <config evaluator="string-compare" condition="DocLibActions">
+
+    <!-- Action definitions -->
+    <actions>
+      <!-- Alingsås definitions -->
+      <!-- Complete document workflow -->
+      <action id="document-wf-completeDocument" type="javascript" label="actions.document.complete-document"
+              icon="document-approve">
+        <param name="function">onActionCompleteDocumentAction</param>
+        <param name="workflow">activiti$completeDocument</param>
+        <permissions>
+          <permission allow="true">Write</permission>
+        </permissions>
+        <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+        <evaluator negate="true">se.alingsas.evaluator.doclib.action.DocumentStatusIsComplete</evaluator>
+        <evaluator>se.alingsas.evaluator.doclib.action.IsAlingsasDocument</evaluator>
+        <evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
+      </action>
+
+      <!-- Revert document workflow -->
+      <action id="document-wf-revertDocument" type="pagelink" label="actions.document.revert-document"
+              icon="document-reject">
+        <param name="page">
+          start-workflow?selectedItems={node.nodeRef}&amp;startWorkflow=activiti$revertDocument
+        </param>
+        <permissions>
+          <permission allow="true">Write</permission>
+        </permissions>
+        <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+        <evaluator>se.alingsas.evaluator.doclib.action.DocumentStatusIsComplete</evaluator>
+        <evaluator>se.alingsas.evaluator.doclib.action.IsAlingsasDocument</evaluator>
+        <evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
+      </action>
+
+      <!-- Download document locked -->
+      <action id="document-download-locked" type="link" icon="document-download"
+              label="actions.document.download-locked">
+        <param name="href">{downloadUrl}</param>
+        <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+        <evaluator>evaluator.doclib.action.isWorkingCopy</evaluator>
+      </action>
+
+      <!-- Download document read-only -->
+      <action id="document-download" type="link" icon="document-download" label="actions.document.download">
+        <param name="href">{downloadUrl}</param>
+        <evaluator>evaluator.doclib.action.editableByCurrentUser</evaluator>
+        <evaluator negate="true">evaluator.doclib.action.isWorkingCopy</evaluator>
+      </action>
+
+      <!-- Edit online AOS -->
+      <!-- Override message bundle -->
+      <action id="document-edit-online-aos" type="javascript" label="actions.document.edit-online-ak"
+              icon="document-edit-online">
+        <param name="function">onActionEditOnlineAos</param>
+        <permissions>
+          <permission allow="true">Write</permission>
+        </permissions>
+        <evaluator>evaluator.doclib.action.isAosOnlineEditAvailable</evaluator>
+        <evaluator>evaluator.doclib.action.notEditBrowser</evaluator>
+        <evaluator negate="true">evaluator.doclib.action.isLockedForAos</evaluator>
+        <evaluator>evaluator.doclib.action.isMimetypeEditableAos</evaluator>
+      </action>
+
+      <!-- View document in browser -->
+      <!-- Override and hide! -->
+      <action id="document-view-content" type="link" label="actions.document.view">
+        <param name="href">{viewUrl}</param>
+        <evaluator>se.alingsas.evaluator.doclib.action.IsAdmin</evaluator>
+      </action>
+
+      <!-- Manage aspects -->
+      <action id="document-manage-aspects" type="javascript" label="actions.document.manage-aspects.new">
+        <param name="function">onActionManageAspects</param>
+        <permissions>
+          <permission allow="true">Write</permission>
+        </permissions>
+        <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+      </action>
+
+      <!-- Change type -->
+      <action id="document-change-type" type="javascript" label="actions.document.change-type">
+        <param name="function">onActionChangeType</param>
+        <permissions>
+          <permission allow="true">Write</permission>
+        </permissions>
+        <evaluator negate="true">evaluator.doclib.action.isLocked</evaluator>
+        <evaluator>se.alingsas.evaluator.doclib.action.IsAdmin</evaluator>
+      </action>
+
+      <action id="document-mail-to-members" type="javascript" label="ak.actions.mail-to-members" icon="document-publish">
+        <param name="function">onActionMultiEmailMembers</param>
+        <evaluator negate="true">se.alingsas.evaluator.doclib.action.IsPublicSite</evaluator>
+      </action>
+    </actions>
+
+
+    <!-- Action Group definitions -->
+    <actionGroups>
+      <actionGroup id="empty"/>
+
+      <actionGroup id="document-browse">
+        <action index="100" id="document-change-type"/>
+        <action index="100" id="document-download-locked"/>
+        <action index="100" id="document-download"/>
+        <action index="310" id="document-manage-aspects"/>
+        <action index="370" id="document-wf-completeDocument"/>
+        <action index="405" id="document-wf-revertDocument"/>
+        <action index="601" id="document-mail-to-members"/>
+      </actionGroup>
+
+      <actionGroup id="document-details">
+        <action index="100" id="document-change-type"/>
+        <action index="100" id="document-download-locked"/>
+        <action index="100" id="document-download"/>
+        <action index="400" id="document-wf-completeDocument"/>
+        <action index="405" id="document-wf-revertDocument"/>
+        <action index="601" id="document-mail-to-members"/>
+      </actionGroup>
+
+    </actionGroups>
+  </config>
+
+</alfresco-config>

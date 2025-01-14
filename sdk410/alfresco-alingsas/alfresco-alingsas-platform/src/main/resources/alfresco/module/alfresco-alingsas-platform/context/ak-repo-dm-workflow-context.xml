@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+  <!-- Activiti complete document workflow definition -->
+
+  <bean id="ak.workflowBootstrap" parent="workflowDeployer">
+    <property name="workflowDefinitions">
+      <list>
+        <props>
+          <prop key="engineId">activiti</prop>
+          <prop key="location">alfresco/module/${project.artifactId}/workflow/ak-complete-document.bpmn</prop>
+          <prop key="mimetype">text/xml</prop>
+          <prop key="redeploy">false</prop>
+        </props>
+        <props>
+          <prop key="engineId">activiti</prop>
+          <prop key="location">alfresco/module/${project.artifactId}/workflow/ak-revert-document.bpmn</prop>
+          <prop key="mimetype">text/xml</prop>
+          <prop key="redeploy">false</prop>
+        </props>
+      </list>
+    </property>
+    <property name="models">
+      <list>
+        <value>alfresco/module/${project.artifactId}/model/akDmWfModel.xml</value>
+      </list>
+    </property>
+    <property name="labels">
+      <list>
+        <value>alfresco/module/${project.artifactId}/workflow/ak-complete-document-workflow-messages</value>
+        <value>alfresco/module/${project.artifactId}/workflow/ak-revert-document-workflow-messages</value>
+      </list>
+    </property>
+  </bean>
+
+
+</beans>
