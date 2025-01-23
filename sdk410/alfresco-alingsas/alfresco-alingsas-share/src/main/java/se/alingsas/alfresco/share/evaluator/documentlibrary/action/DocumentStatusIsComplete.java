@@ -20,21 +20,27 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package action;
+package se.alingsas.alfresco.share.evaluator.documentlibrary.action;
+
+/**
+ * @author Marcus Svensson - Redpill Linpro AB
+ *
+ */
 
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.web.evaluator.BaseEvaluator;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- * Validate that a document is of the correct type, all Alingsås types have the akdm:commonAspect applied to them
+ * Evaluator to determine if a document is completed or not
+ * 
  * @author Marcus Svensson - Redpill Linpro AB
  * 
  */
-public class IsAlingsasDocument extends BaseEvaluator {
+public class DocumentStatusIsComplete extends BaseEvaluator {
 
-	private static final String ASPECT_AK_COMMON = "akdm:commonAspect";
+	private static final String DOC_STATUS_PROPERTY = "akdm:documentStatus";
+	private static final String DOC_STATUS_COMPLETE_VALUE = "Färdigt dokument";
 
 	/*
 	 * (non-Javadoc)
@@ -46,17 +52,13 @@ public class IsAlingsasDocument extends BaseEvaluator {
 	@Override
 	public boolean evaluate(JSONObject jsonObject) {
 		try {
-			JSONArray nodeAspects = getNodeAspects(jsonObject);
+			String property = (String) getProperty(jsonObject,
+					DOC_STATUS_PROPERTY);
 
-			if (nodeAspects == null) {
-				return false;
-			} else {
-				if (nodeAspects.contains(ASPECT_AK_COMMON)) {
-					return true;
-				} else {
-					return false;
-				}
+			if (DOC_STATUS_COMPLETE_VALUE.equalsIgnoreCase(property)) {
+				return true;
 			}
+			return false;
 		} catch (Exception err) {
 			throw new AlfrescoRuntimeException(
 					"JSONException whilst running action evaluator: "

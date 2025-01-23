@@ -20,22 +20,21 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package action;
+package se.alingsas.alfresco.share.evaluator.documentlibrary.action;
 
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.web.evaluator.BaseEvaluator;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.extensions.surf.RequestContext;
-import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
-import org.springframework.extensions.webscripts.connector.User;
 
 /**
- * Validate that the user is an admin user
+ * Validate that a document is of the correct type, all Alingsås types have the akdm:commonAspect applied to them
  * @author Marcus Svensson - Redpill Linpro AB
  * 
  */
-public class IsAdmin extends BaseEvaluator {
-;
+public class IsAlingsasDocument extends BaseEvaluator {
+
+	private static final String ASPECT_AK_COMMON = "akdm:commonAspect";
 
 	/*
 	 * (non-Javadoc)
@@ -47,13 +46,20 @@ public class IsAdmin extends BaseEvaluator {
 	@Override
 	public boolean evaluate(JSONObject jsonObject) {
 		try {
-			RequestContext rc = ThreadLocalRequestContext.getRequestContext();
-			User user = rc.getUser();			
+			JSONArray nodeAspects = getNodeAspects(jsonObject);
 
-			return (user != null && user.isAdmin());
+			if (nodeAspects == null) {
+				return false;
+			} else {
+				if (nodeAspects.contains(ASPECT_AK_COMMON)) {
+					return true;
+				} else {
+					return false;
+				}
+			}
 		} catch (Exception err) {
 			throw new AlfrescoRuntimeException(
-					"Exception while running action evaluator: "
+					"JSONException whilst running action evaluator: "
 							+ err.getMessage());
 		}
 	}

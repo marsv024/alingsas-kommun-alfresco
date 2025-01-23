@@ -20,27 +20,22 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package action;
-
-/**
- * @author Marcus Svensson - Redpill Linpro AB
- *
- */
+package se.alingsas.alfresco.share.evaluator.documentlibrary.action;
 
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.web.evaluator.BaseEvaluator;
 import org.json.simple.JSONObject;
+import org.springframework.extensions.surf.RequestContext;
+import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
+import org.springframework.extensions.webscripts.connector.User;
 
 /**
- * Evaluator to determine if a document is completed or not
- * 
+ * Validate that the user is an admin user
  * @author Marcus Svensson - Redpill Linpro AB
  * 
  */
-public class DocumentStatusIsComplete extends BaseEvaluator {
-
-	private static final String DOC_STATUS_PROPERTY = "akdm:documentStatus";
-	private static final String DOC_STATUS_COMPLETE_VALUE = "Färdigt dokument";
+public class IsAdmin extends BaseEvaluator {
+;
 
 	/*
 	 * (non-Javadoc)
@@ -52,16 +47,13 @@ public class DocumentStatusIsComplete extends BaseEvaluator {
 	@Override
 	public boolean evaluate(JSONObject jsonObject) {
 		try {
-			String property = (String) getProperty(jsonObject,
-					DOC_STATUS_PROPERTY);
+			RequestContext rc = ThreadLocalRequestContext.getRequestContext();
+			User user = rc.getUser();			
 
-			if (DOC_STATUS_COMPLETE_VALUE.equalsIgnoreCase(property)) {
-				return true;
-			}
-			return false;
+			return (user != null && user.isAdmin());
 		} catch (Exception err) {
 			throw new AlfrescoRuntimeException(
-					"JSONException whilst running action evaluator: "
+					"Exception while running action evaluator: "
 							+ err.getMessage());
 		}
 	}

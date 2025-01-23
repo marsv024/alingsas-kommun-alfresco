@@ -20,7 +20,7 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-package action;
+package se.alingsas.alfresco.share.evaluator.documentlibrary.action;
 
 /**
  * @author Marcus Svensson - Redpill Linpro AB

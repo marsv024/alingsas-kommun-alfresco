@@ -1,4 +1,4 @@
-package action;
+package se.alingsas.alfresco.share.evaluator.documentlibrary.action;
 
 import org.alfresco.web.evaluator.BaseEvaluator;
 import org.json.simple.JSONObject;
@@ -9,7 +9,6 @@ import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.Response;
-import jakarta.servlet.http.HttpSession;
 
 public class IsPublicSite extends BaseEvaluator {
   @Override
