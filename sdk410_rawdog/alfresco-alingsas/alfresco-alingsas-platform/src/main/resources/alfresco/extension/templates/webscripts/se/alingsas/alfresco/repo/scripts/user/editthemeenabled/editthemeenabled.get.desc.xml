@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Check if the user is allowed to edit the theme of a site</shortname>
+  <description>Check if the user is allowed to edit the theme a site</description>
+  <url>/alingsas/user/editthemeenabled</url>
+  <authentication>user</authentication>
+  <format default="html">argument</format>
+  <family>Alingsås</family>
+</webscript>

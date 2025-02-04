@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Check if the user is allowed to create a site</shortname>
+  <description>Check if the user is allowed to create a site</description>
+  <url>/alingsas/user/createsiteenabled</url>
+  <authentication>user</authentication>
+  <format default="html">argument</format>
+  <family>Alingsås</family>
+</webscript>

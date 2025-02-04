@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.alingsas.se/alfresco/workflow">
+  <process id="revertDocument" name="Återställande av dokument till arbetsdokument" isExecutable="true">
+    <extensionElements>
+      <activiti:executionListener event="start" class="se.alingsas.alfresco.repo.workflow.RevertDocumentExecutionStartListener"></activiti:executionListener>
+    </extensionElements>
+    <startEvent id="start" name="Start" activiti:formKey="akwf:revertDocument"></startEvent>
+    <sequenceFlow id="start_flow" name="Hantera dokument olika beroende på val av målmapp i formulär" sourceRef="start" targetRef="autoManDecision"></sequenceFlow>
+    <exclusiveGateway id="autoManDecision" name="Decides if automatic or manual handling should be done for this process"></exclusiveGateway>
+    <sequenceFlow id="revert_to_site_flow" name="Sammarbetsyta, där initieraren inte har behörighet att skapa dokument." sourceRef="autoManDecision" targetRef="reviewDocumentTask">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_handling== 'Manual'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="reviewDocumentTask" name="Dokumentansvarig på sammarbetsyta: Hantering av dokument" activiti:candidateGroups="${akwf_siteGroup}" activiti:formKey="akwf:revertDocumentReviewTask">
+      <extensionElements>
+        <activiti:taskListener event="complete" class="se.alingsas.alfresco.repo.workflow.RevertDocumentReviewTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="review_ok_flow" sourceRef="reviewDocumentTask" targetRef="completeDocumentScript"></sequenceFlow>
+    <sequenceFlow id="revert_automatic_flow" name="Sammarbetsyta / mina dokument där initiatören har behörighet att skapa filer" sourceRef="autoManDecision" targetRef="completeDocumentScript">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_handling== 'Automatic'}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="completeDocumentScript" name="Ändra status på dokument till arbetsdokument och flytta dokumentet" activiti:class="se.alingsas.alfresco.repo.workflow.RevertDocumentServiceTaskDelegate"></serviceTask>
+    <sequenceFlow id="user_receipt_review_flow" sourceRef="completeDocumentScript" targetRef="userReviewResultReceiptTask"></sequenceFlow>
+    <sequenceFlow id="error_flow" name="Felhantering" sourceRef="autoManDecision" targetRef="userReviewResultReceiptTask">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${akwf_handling== 'Error'}]]></conditionExpression>
+    </sequenceFlow>
+    <userTask id="userReviewResultReceiptTask" name="Kvittens på statusändring till arbetsdokument" activiti:assignee="${akwf_initiator}" activiti:formKey="akwf:revertDocumentReviewReceiptTask">
+      <extensionElements>
+        <activiti:taskListener event="create" class="se.alingsas.alfresco.repo.workflow.UnlockFilesTaskListener"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="end_flow" sourceRef="userReviewResultReceiptTask" targetRef="end"></sequenceFlow>
+    <endEvent id="end" name="End"></endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_revertDocument">
+    <bpmndi:BPMNPlane bpmnElement="revertDocument" id="BPMNPlane_revertDocument">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reviewDocumentTask" id="BPMNShape_reviewDocumentTask">
+        <omgdc:Bounds height="108.0" width="105.0" x="289.0" y="27.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="830.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="autoManDecision" id="BPMNShape_autoManDecision">
+        <omgdc:Bounds height="40.0" width="40.0" x="180.0" y="197.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="completeDocumentScript" id="BPMNShape_completeDocumentScript">
+        <omgdc:Bounds height="81.0" width="105.0" x="420.0" y="177.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userReviewResultReceiptTask" id="BPMNShape_userReviewResultReceiptTask">
+        <omgdc:Bounds height="77.0" width="105.0" x="630.0" y="179.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="error_flow" id="BPMNEdge_error_flow">
+        <omgdi:waypoint x="200.0" y="237.0"></omgdi:waypoint>
+        <omgdi:waypoint x="199.0" y="329.0"></omgdi:waypoint>
+        <omgdi:waypoint x="437.0" y="329.0"></omgdi:waypoint>
+        <omgdi:waypoint x="682.0" y="329.0"></omgdi:waypoint>
+        <omgdi:waypoint x="682.0" y="256.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="13.0" width="100.0" x="-38.0" y="18.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="end_flow" id="BPMNEdge_end_flow">
+        <omgdi:waypoint x="735.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="830.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="start_flow" id="BPMNEdge_start_flow">
+        <omgdi:waypoint x="65.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="180.0" y="217.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="65.0" width="100.0" x="-41.0" y="6.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="user_receipt_review_flow" id="BPMNEdge_user_receipt_review_flow">
+        <omgdi:waypoint x="525.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="630.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="revert_to_site_flow" id="BPMNEdge_revert_to_site_flow">
+        <omgdi:waypoint x="200.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="289.0" y="81.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="65.0" width="100.0" x="-40.0" y="-84.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="revert_automatic_flow" id="BPMNEdge_revert_automatic_flow">
+        <omgdi:waypoint x="220.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="217.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="65.0" width="100.0" x="-40.0" y="-1.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="review_ok_flow" id="BPMNEdge_review_ok_flow">
+        <omgdi:waypoint x="394.0" y="81.0"></omgdi:waypoint>
+        <omgdi:waypoint x="472.0" y="80.0"></omgdi:waypoint>
+        <omgdi:waypoint x="472.0" y="177.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

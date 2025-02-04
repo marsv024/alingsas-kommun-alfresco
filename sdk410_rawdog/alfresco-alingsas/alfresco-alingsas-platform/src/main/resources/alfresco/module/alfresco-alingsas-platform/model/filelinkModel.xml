@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="flink:flinkmodel" 
+       xmlns="http://www.alfresco.org/model/dictionary/1.0" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <!-- Optional meta-data about the model -->
+   <description>Additions to Content Model -- File Linking</description>
+   <author>Dick Weisinger</author>
+   <version>1.0</version>
+
+   <!-- Imports are required to allow references to definitions in other models -->
+   <imports>
+   	  <!-- Import Alfresco Dictionary Definitions -->
+      <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+      <!-- Import Alfresco Content Domain Model Definitions -->
+      <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+   </imports>
+
+   <!-- Custom File Linking Namespace -->
+   <namespaces>
+      <namespace uri="http://www.formtek.com/model/filelink/1.0" prefix="flink"/>
+   </namespaces>
+
+  <aspects>
+     <!--  We add this to keep track of when a document has been linked to -->
+     <aspect name="flink:flinkAspect">
+         <title>Reference</title>
+         <properties>
+            <property name="flink:numLinks">
+               <title>Count of number of links</title>
+               <type>d:int</type>
+               <default>0</default>
+            </property>
+            <property name="flink:links">
+				<title>List of linked file</title>
+				<type>d:noderef</type>
+				<mandatory>false</mandatory>	
+				<multiple>true</multiple>		
+			</property>
+         </properties>       
+      </aspect>
+      
+  </aspects>
+
+</model>
