@@ -15,10 +15,6 @@
     <property name="dictionaryService" ref="DictionaryService" />
   </bean>
 
-  <bean id="ak.documentPolicy" class="se.alingsas.alfresco.repo.behaviour.DocumentPolicy" depends-on="ak.dictionaryBootstrap" parent="ak.abstractPolicy">
-    <property name="numberingComponent" ref="ak.currentDatePrefixNumberingComponent" />
-  </bean>
-
   <bean id="ak.governingAspectPolicy" class="se.alingsas.alfresco.repo.behaviour.GoverningAspectPolicy" depends-on="ak.dictionaryBootstrap" parent="ak.abstractPolicy" />
 
 </beans>

@@ -9,7 +9,7 @@
     <parent>
         <groupId>se.alingsas.alfresco</groupId>
         <artifactId>alfresco-alingsas</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>6.0.0</version>
     </parent>
 
     <properties>
@@ -30,21 +30,12 @@
         <classifier>classes</classifier>
       </dependency>
 
-      <!-- https://github.com/alfresco/share/tree/develop/share-services -->
-      <dependency>
-        <groupId>org.alfresco</groupId>
-        <artifactId>alfresco-share-services</artifactId>
-        <version>${alfresco.share.version}</version>
-        <scope>provided</scope>
-        <classifier>classes</classifier>
-      </dependency>
-
-      <!-- https://github.com/redpill-linpro/alfresco-numbering -->
+      <!-- https://github.com/redpill-linpro/alfresco-numbering
       <dependency>
         <groupId>org.redpill-linpro.alfresco.numbering</groupId>
         <artifactId>alfresco-numbering-repo</artifactId>
         <version>${rl.alfresco.numbering.version}</version>
-      </dependency>
+      </dependency>-->
 
       <!--https://github.com/Redpill-Linpro/alfresco-jobs-->
       <dependency>

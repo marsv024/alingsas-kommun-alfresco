@@ -22,35 +22,4 @@
       <ref bean="global-properties" />
     </property>
   </bean>
-
-  <bean id="ak.currentDatePrefixNumberingComponent" parent="rl.abstractNumberingComponent" depends-on="dictionaryBootstrap">
-    <property name="id" value="documentNumber" />
-    <property name="startValue" value="1" />
-    <property name="bindTypes">
-      <list>
-        <value>cm:content</value>
-      </list>
-    </property>
-    <property name="ignoreTypes">
-      <list>
-        <value>cm:thumbnail</value>
-      </list>
-    </property>
-    <property name="ignoreAspects">
-      <list>
-        <value>cm:workingcopy</value>
-      </list>
-    </property>  
-    <property name="decorator" ref="ak.documentNumberDecorator" />
-    <property name="numberingStorage" ref="rl.nodeNumberingStorage" />  
-  </bean>
-  
-  <bean id="ak.documentNumberDecorator" class="se.alingsas.alfresco.repo.numbering.AlingsasDocumentDecorator">
-    <property name="prefixSeparator" value="${ak.numbering.decorator.document.prefixseparator}" />
-    <property name="zeroPadding" value="${ak.numbering.decorator.document.zeropadding}" />
-    <property name="datePattern" value="${ak.numbering.decorator.document.datePattern}" />
-    <property name="numberSeparator" value="${ak.numbering.decorator.document.separator}" />
-  </bean>
-
-
 </beans>

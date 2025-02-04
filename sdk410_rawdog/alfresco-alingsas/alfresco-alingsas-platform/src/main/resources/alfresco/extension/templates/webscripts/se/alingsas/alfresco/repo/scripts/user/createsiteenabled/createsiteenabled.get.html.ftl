@@ -1,1 +1,0 @@
-<#if createSiteEnabled>true<#else>false</#if>

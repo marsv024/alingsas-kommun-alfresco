@@ -9,14 +9,6 @@
     <property name="basePath" value="${byggreda.basePath}" />
   </bean>
 
-  <!-- Bean configurations for Document numbering script -->
-  <bean id="webscript.se.alingsas.alfresco.repo.scripts.documentnumbering.handlemissing.get" class="se.alingsas.alfresco.repo.scripts.HandleMissingDocumentNumbers" parent="webscript">
-    <property name="serviceRegistry" ref="ServiceRegistry" />
-    <property name="behaviourFilter" ref="policyBehaviourFilter" />
-    <property name="numberingComponent" ref="ak.currentDatePrefixNumberingComponent" />
-    <property name="repositoryHelper" ref="repositoryHelper" />
-  </bean>
-
   <!-- Bean configuration for Complete document workflow web script -->
 
   <bean id="webscript.se.alingsas.alfresco.repo.scripts.workflow.completedocument.post" class="se.alingsas.alfresco.repo.scripts.CompleteDocumentStartWf" parent="webscript">

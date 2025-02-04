@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.alingsas.alfresco</groupId>
   <artifactId>alfresco-alingsas</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>6.0.0</version>
   <name>AIO - SDK 4.10</name>
   <description>All-In-One (AIO) project for SDK 4.10</description>
   <packaging>pom</packaging>
@@ -40,8 +40,7 @@
 
     <alfresco.swedish.version>6.2.7</alfresco.swedish.version> <!-- Done -->
     <rl.alfresco-test.version>4.4.0</rl.alfresco-test.version> <!-- Done -->
-    <rl.alfresco.document-templates.version>1.4.0</rl.alfresco.document-templates.version> <!-- Done -->
-    <rl.alfresco.numbering.version>1.3.0</rl.alfresco.numbering.version>
+    <rl.alfresco.document-templates.version>1.5.0</rl.alfresco.document-templates.version> <!-- Done -->
     <rl.alfresco.jobs>1.0.3</rl.alfresco.jobs> <!-- Done -->
     <rl.alfresco.email.version>1.1.0</rl.alfresco.email.version> <!-- Done -->
     <sonar.jacoco.reportPath>target/jacoco-ut.exec</sonar.jacoco.reportPath>
@@ -477,6 +476,10 @@
     <repository>
       <id>alfresco-private-repository</id>
       <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
+    </repository>
+    <repository>
+      <id>alfresco-internal</id>
+      <url>https://artifacts.alfresco.com/nexus/content/groups/internal</url>
     </repository>
   </repositories>
   <pluginRepositories>
