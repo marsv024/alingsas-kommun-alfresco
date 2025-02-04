@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <id>membership-requests</id>
+   <page-type>membership-requests</page-type>
+   <title>Membership Requests</title>
+   <title-id>page.membershipRequests.title</title-id>
+   <description>Membership Requests</description>
+   <description-id>page.membershipRequests.description</description-id>
+   <template-instance>membership-requests</template-instance>
+   <authentication>user</authentication>
+   
+
+</page>

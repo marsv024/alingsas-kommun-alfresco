@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<page>
+   <title>Preview</title>
+   <description>Page for previewing content</description>
+   <template-instance>preview</template-instance>
+   <authentication>user</authentication>
+   <components>
+
+      <!-- Display document -->
+      <component>
+         <region-id>components</region-id>
+         <sub-components>
+
+            <sub-component id="header">
+               <url>/ak/components/preview/header</url>
+               <properties>
+                  <nodeRef>{nodeRef}</nodeRef>
+                  <loginLink>document-details</loginLink>
+               </properties>
+            </sub-component>
+
+            <sub-component id="node-header">
+               <url>/ak/components/preview/node-header</url>
+               <properties>
+                  <nodeRef>{nodeRef}</nodeRef>
+               </properties>
+            </sub-component>
+
+            <sub-component id="web-preview">
+               <url>/components/preview/web-preview</url>
+               <properties>
+                  <nodeRef>{nodeRef}</nodeRef>
+                  <api>api</api>
+                  <proxy>alfresco</proxy>
+               </properties>
+            </sub-component>
+         </sub-components>
+
+      </component>
+
+      <!-- Error page components -->
+      <component>
+         <region-id>error</region-id>
+         <sub-components>
+
+            <sub-component id="header">
+               <url>/ak/components/preview/header</url>
+               <properties>
+                  <nodeRef>{nodeRef}</nodeRef>
+                  <loginLink>login</loginLink>
+               </properties>
+            </sub-component>
+
+            <sub-component id="error">
+               <url>/ak/components/preview/error</url>
+            </sub-component>
+         </sub-components>
+
+      </component>
+
+   </components>
+</page>
+

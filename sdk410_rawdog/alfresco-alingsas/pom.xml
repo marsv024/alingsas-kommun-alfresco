@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>se.alingsas.alfresco</groupId>
   <artifactId>alfresco-alingsas</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>6.0.0</version>
   <name>AIO - SDK 4.10</name>
   <description>All-In-One (AIO) project for SDK 4.10</description>
   <packaging>pom</packaging>
